@@ -11,7 +11,8 @@ function renderTemplate(filePath, data) {
 } 
 
 const templates = {
-  'stringInput': 'templates/CustomString.js'
+  'stringInput': 'templates/CustomString.js',
+  'objectInput': 'templates/CustomObject.js'
 }
 inquirer
   .prompt([
