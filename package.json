@@ -1,8 +1,11 @@
 {
-  "name": "input-cli",
-  "version": "1.0.0",
+  "name": "sanity-custom-input",
+  "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
+  "bin": {
+    "customInput": "src/index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "run": "node src/index.js"
@@ -11,7 +14,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "handlebars": "^4.7.7",
     "inquirer": "^8.0.0"
   },
   "devDependencies": {

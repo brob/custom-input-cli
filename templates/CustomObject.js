@@ -1,3 +1,6 @@
+module.exports = (data) => {
+
+return `
 import React from 'react'
 
 // Helper component for building default inputs
@@ -8,7 +11,7 @@ import Fieldset from 'part:@sanity/components/fieldsets/default'
 import { setIfMissing } from '@sanity/form-builder/PatchEvent'
 
 
-const {{ name }} = React.forwardRef((props, ref) => {
+const ${data.name} = React.forwardRef((props, ref) => {
   // destructure props for easier use
   const {
     compareValue,
@@ -96,4 +99,5 @@ const {{ name }} = React.forwardRef((props, ref) => {
 }
 )
 
-export default {{ name }}
+export default ${data.name}
+`}

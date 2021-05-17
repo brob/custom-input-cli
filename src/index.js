@@ -1,19 +1,12 @@
+#! /usr/bin/env node
+
 var inquirer = require('inquirer');
 const fse = require('fs-extra')
 const fs = require('fs')
-const Handlebars = require("handlebars");
 
+const ObjectTemplate = require('../templates/CustomObject')
+const StringTemplate = require('../templates/CustomString')
 
-function renderTemplate(filePath, data) {
-  const source = fs.readFileSync(filePath,'utf8')
-  const template = Handlebars.compile(source);
-  return template(data)
-} 
-
-const templates = {
-  'stringInput': 'templates/CustomString.js',
-  'objectInput': 'templates/CustomObject.js'
-}
 inquirer
   .prompt([
     {
@@ -45,7 +38,13 @@ inquirer
   .then(answers => {
     const {type, inputName, dir} = answers;
     const path = `${process.cwd()}/${dir}/${inputName}.js`
-    const template = `${process.cwd()}/${templates[type]}`
+    let template
+    if (type == 'stringInput') {
+      template = StringTemplate({name: inputName}).toString()
+    } else if (type == 'objectInput') {
+      template = ObjectTemplate({name: inputName})
+    }
+
     fs.access(dir, function(error) {
       if (error) {
         fs.mkdir(dir, (err) => {
@@ -56,8 +55,8 @@ inquirer
       }
     })
     
-    const templateString = renderTemplate(template, {name: inputName})
-    fse.outputFile(path, templateString, (err)=>{
+    // const templateString = renderTemplate(template, {name: inputName})
+    fse.outputFile(path, template, (err)=>{
       console.log('written?',err)
     })
       

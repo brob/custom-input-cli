@@ -1,12 +1,13 @@
-// /src/MyCustomString.js
+module.exports = (data) => {
 
+  return `
 import React from 'react'
 import { FormField } from '@sanity/base/components'
 import { TextInput } from '@sanity/ui'
 import PatchEvent, { set, unset } from '@sanity/form-builder/PatchEvent'
 import { useId } from "@reach/auto-id" // hook to generate unique IDs
 
-const {{ name }} = React.forwardRef((props, ref) => {
+const ${data.name} = React.forwardRef((props, ref) => {
   const {
     type,         // Schema information
     value,        // Current field value
@@ -60,4 +61,5 @@ const {{ name }} = React.forwardRef((props, ref) => {
 )
 
 // Create the default export to import into our schema
-export default {{ name }}
+export default ${data.name}
+`}
