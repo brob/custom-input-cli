@@ -5,7 +5,7 @@ import React from 'react'
 import { FormField } from '@sanity/base/components'
 import { TextInput } from '@sanity/ui'
 import PatchEvent, { set, unset } from '@sanity/form-builder/PatchEvent'
-import { useId } from "@reach/auto-id" // hook to generate unique IDs
+import { useId } from "@reach/auto-id" // hook to generate unique IDs be sure to npm i auto-id
 
 const ${data.name} = React.forwardRef((props, ref) => {
   const {
