@@ -1,11 +1,41 @@
 #! /usr/bin/env node
 
-var inquirer = require('inquirer');
+const inquirer = require('inquirer');
 const fse = require('fs-extra')
 const fs = require('fs')
 
 const ObjectTemplate = require('../templates/CustomObject')
 const StringTemplate = require('../templates/CustomString')
+
+function fileCheck(answers) {
+  const path = `${process.cwd()}/${answers.dir}/${answers.inputName}.js`
+    if (fs.existsSync(path)) return true
+    return false
+}
+function buildFile(answers) {
+  const {type, inputName, dir} = answers;
+  const path = `${process.cwd()}/${dir}/${inputName}.js`
+  let template
+      if (type == 'stringInput') {
+        template = StringTemplate({name: inputName}).toString()
+      } else if (type == 'objectInput') {
+        template = ObjectTemplate({name: inputName})
+      }
+  
+      fs.access(dir, function(error) {
+        if (error) {
+          fs.mkdir(dir, (err) => {
+            if (err) throw err;
+          })
+        } else {
+          return
+        }
+      })
+      
+      fse.outputFile(path, template, (err)=>{
+        console.log('written?',err)
+      })
+}
 
 inquirer
   .prompt([
@@ -34,32 +64,17 @@ inquirer
       name: 'inputName',
       message: "What should we call your input component? (example: MyComponentName, CustomString)",
     },
+    {
+      type: 'confirm',
+      name: 'overwrite',
+      message: 'Would you like to override this file?',
+      when: fileCheck
+    }
   ])
   .then(answers => {
-    const {type, inputName, dir} = answers;
-    const path = `${process.cwd()}/${dir}/${inputName}.js`
-    let template
-    if (type == 'stringInput') {
-      template = StringTemplate({name: inputName}).toString()
-    } else if (type == 'objectInput') {
-      template = ObjectTemplate({name: inputName})
-    }
-
-    fs.access(dir, function(error) {
-      if (error) {
-        fs.mkdir(dir, (err) => {
-          if (err) throw err;
-        })
-      } else {
-        return
-      }
-    })
-    
-    // const templateString = renderTemplate(template, {name: inputName})
-    fse.outputFile(path, template, (err)=>{
-      console.log('written?',err)
-    })
-      
+    if (answers.overwrite == undefined || answers.overwrite == true) return buildFile(answers)  
+    console.log('Bye!')
+          
   })
   .catch(error => {
     if (error.isTtyError) {
