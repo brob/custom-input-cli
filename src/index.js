@@ -1,7 +1,6 @@
 #! /usr/bin/env node
 
 const inquirer = require('inquirer');
-const fse = require('fs-extra')
 const fs = require('fs')
 
 const ObjectTemplate = require('../templates/CustomObject')
@@ -31,10 +30,7 @@ function buildFile(answers) {
           return
         }
       })
-      
-      fse.outputFile(path, template, (err)=>{
-        console.log('written?',err)
-      })
+
 }
 
 inquirer
