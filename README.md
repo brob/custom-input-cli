@@ -1,5 +1,18 @@
-# PoC For CLI of custom input component boilerplate
+# Experimental CLI for creating boilerplate of Sanity Custom Input Components
 
-_This is an experimental proof of concept_
+This package creates the boilerplate for basic [Sanity Custom Input components](https://www.sanity.io/docs/custom-input-widgets).
 
-If you want to test it, clone the repository, cd into the directory and run `npm link`. You can then run it from any directory by running `customInput` in your terminal.
+## Installation
+
+```sh
+npm install -g sanity-custom-input
+```
+
+## Usage
+
+In your Sanity Studio project, run `customInput`, the type of boilerplate you want, specify your components directory and the name of your new component.
+
+
+## Experimental
+
+This CLI is highly experimental. It's mostly a code generator, but is not officially supported by Sanity.io.
