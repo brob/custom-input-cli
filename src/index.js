@@ -2,6 +2,7 @@
 
 const inquirer = require('inquirer');
 const fs = require('fs')
+const fse = require('fs-extra')
 
 const ObjectTemplate = require('../templates/CustomObject')
 const StringTemplate = require('../templates/CustomString')
@@ -30,7 +31,10 @@ function buildFile(answers) {
           return
         }
       })
-
+      
+      fse.outputFile(path, template, (err)=>{
+        console.log('File Written')
+      })
 }
 
 inquirer
